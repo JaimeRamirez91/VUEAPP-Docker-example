@@ -1,0 +1,25 @@
+# Build VUE app
+FROM node:12.22-alpine as build
+# Crear el espacio de trabajo
+WORKDIR /app
+# Generar PATH temporal para compilar la app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /app/package.json
+# Instalar dependencias
+RUN npm install --silent
+RUN npm install @vue/cli@3.7.0 -g
+# Copiar los ficheros
+COPY . /app
+# Compilar nuestra VUE app
+RUN npm run build
+
+# Crear ProductionEnvironment
+FROM nginx:1.19-alpine
+# Copiar los files compilados en el proceso anrerior a la ruta de nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+# Copiar la configuracion de nginx
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+# Desbloquear o exponer un puerto por defecto
+EXPOSE 80
+#  Iniciar en primer plano, como proceso principal
+CMD ["nginx", "-g", "daemon off;"]
