@@ -1,3 +1,5 @@
+# https://docs.docker.com/engine/reference/commandline/build/
+
 # Build VUE app
 FROM node:12.22-alpine as build
 # Crear el espacio de trabajo
