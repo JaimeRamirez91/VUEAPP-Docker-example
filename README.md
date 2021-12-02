@@ -28,7 +28,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### Commpile this project using docker
+### Compile this project using docker
 ```
 docker-compose up -d
 ```
